@@ -33,7 +33,6 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 # Генераторы
 from generator import generate_design
 from hybrid_model_web import load_hybrid_model, transform, denormalize
-# generate_custom определяем здесь, используя загруженную гибридную модель
 
 transform = transforms.Compose([
     transforms.Resize((256, 256)),
