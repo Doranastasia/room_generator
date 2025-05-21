@@ -146,10 +146,8 @@ class HybridFurnitureModelInpaint(nn.Module):
                     
             mask_np = mask.cpu().numpy()
             if mask_np.ndim == 4:
-                # Если размерность (B, C, H, W), берем первый батч и первый канал
                 mask_np = mask_np[0, 0, :, :]
             elif mask_np.ndim == 3:
-                # Если размерность (B, H, W) или (C, H, W), тоже выбираем правильно
                 mask_np = mask_np[0, :, :]  # либо mask_np[0] если это (B,H,W)
             mask_np = (mask_np * 255).astype(np.uint8)
 
