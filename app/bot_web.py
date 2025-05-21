@@ -21,8 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Токен бота 
-TOKEN   = "7378475396:AAHI8eSFvJVl4BjaEVQ_kAGJ-AB75O9wE8Q"
-
+TOKEN = os.environ["BOT_TOKEN"]
 TMP_DIR = "tmp"
 os.makedirs(TMP_DIR, exist_ok=True)
 
