@@ -14,11 +14,10 @@ dtype = torch.float16 if device.type == "cuda" else torch.float32
 proc = DPTImageProcessor.from_pretrained("Intel/dpt-beit-large-512")
 dpt = DPTForDepthEstimation.from_pretrained("Intel/dpt-beit-large-512").to(device).eval()
 
-# Глобальная переменная для ленивой инициализации пайплайна
+# Глобальная переменная для отсроченной инициализации пайплайна, чтобы не занимать гпу память
 _pipe = None
 
 def _init_pipe():
-    """Создаёт и возвращает пайплайн с ControlNet (Stable Diffusion XL)."""
     from diffusers import ControlNetModel, StableDiffusionXLControlNetPipeline
 
     logger.info("Инициализация ControlNet и StableDiffusionXLControlNetPipeline...")
@@ -43,14 +42,12 @@ def _init_pipe():
     return pipe
 
 def get_pipe():
-    """Возвращает пайплайн, инициализируя его при необходимости."""
     global _pipe
     if _pipe is None:
         _pipe = _init_pipe()
     return _pipe
 
 def get_depth(img: Image.Image) -> Image.Image:
-    """Вычисляет карту глубины из RGB изображения, возвращает в оттенках серого."""
     inputs = proc(images=img, return_tensors="pt").to(device)
     with torch.no_grad():
         depth = dpt(**inputs).predicted_depth
