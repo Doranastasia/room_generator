@@ -1,0 +1,7 @@
+services:
+  - type: worker
+    name: telegram-bot
+    env: python
+    buildCommand: pip install -r app/requirements.txt
+    startCommand: python app/bot_web.py
+    region: frankfurt

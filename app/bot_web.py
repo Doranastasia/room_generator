@@ -21,8 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Токен бота 
-TOKEN   = "7378475396:AAHI8eSFvJVl4BjaEVQ_kAGJ-AB75O9wE8Q"
-
+TOKEN = os.environ["BOT_TOKEN"]
 TMP_DIR = "tmp"
 os.makedirs(TMP_DIR, exist_ok=True)
 
@@ -34,7 +33,6 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 # Генераторы
 from generator import generate_design
 from hybrid_model_web import load_hybrid_model, transform, denormalize
-# generate_custom определяем здесь, используя загруженную гибридную модель
 
 transform = transforms.Compose([
     transforms.Resize((256, 256)),
